@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    dev.okteto.com/last-updated: 2024-11-04T20:35:51
+  labels:
+    dev.okteto.com/deployed-by: test-node-delay
+    stack.okteto.com/name: test-node-delay
+    stack.okteto.com/service: nginx
+  name: nginx
+  namespace: okteto-admin
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      stack.okteto.com/name: test-node-delay
+      stack.okteto.com/service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        dev.okteto.com/deployed-by: test-node-delay
+        stack.okteto.com/name: test-node-delay
+        stack.okteto.com/service: nginx
+    spec:
+      containers:
+      - image: registry.jona.okteto.me/okteto-admin/test-node-delay-nginx@sha256:7db9c1a157055b8508402a1f4a021db1f2528bfc66f4b44ae497b5e8a023eb7c
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 0

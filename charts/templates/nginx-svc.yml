@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    dev.okteto.com/deployed-by: test-node-delay
+    stack.okteto.com/name: test-node-delay
+    stack.okteto.com/service: nginx
+  name: nginx
+  namespace: okteto-admin
+spec:
+  clusterIP: 34.118.226.147
+  clusterIPs:
+  - 34.118.226.147
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: p-80-80-tcp
+    port: 80
+  selector:
+    stack.okteto.com/name: test-node-delay
+    stack.okteto.com/service: nginx

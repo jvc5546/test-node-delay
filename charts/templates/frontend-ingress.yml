@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    dev.okteto.com/generate-host: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      # ---- START OKTETO ----
+
+      error_page 403 =403 /_okteto/error/403/$namespace/$service_name/$service_port;
+      error_page 502 =502 /_okteto/error/502/$namespace/$service_name/$service_port;
+      error_page 503 =503 /_okteto/error/503/$namespace/$service_name/$service_port;
+
+      # ---- END OKTETO ----
+    nginx.ingress.kubernetes.io/proxy-body-size: 60M
+    nginx.ingress.kubernetes.io/server-snippet: "\nlocation /_okteto/error {\n\tinternal;\n\trewrite
+      \"^/_okteto/error/(\\d{3})/([-a-z0-9]+)/([-a-z0-9]+)/(\\d{1,5})$\" \"/\" break;\n\tproxy_method
+      GET;\n\tproxy_set_header X-Code $1;\n\tproxy_set_header X-Namespace $2;\n\tproxy_set_header
+      X-Service-Name $3;\n\tproxy_set_header X-Service-Port $4;\n\tproxy_pass http://okteto-ingress-nginx-defaultbackend.okteto.svc.cluster.local;\n}\n"
+  labels:
+    dev.okteto.com/deployed-by: test-node-delay
+    dev.okteto.com/metadata-version: "8"
+    dev.okteto.com/namespace: okteto-admin
+    stack.okteto.com/endpoint: frontend
+    stack.okteto.com/name: test-node-delay
+    stack.okteto.com/service: frontend
+  name: frontend
+  namespace: okteto-admin
+spec:
+  ingressClassName: okteto-nginx
+  rules:
+  - host: frontend-okteto-admin.jona.okteto.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: frontend
+            port:
+              number: 3000
+        path: /
+        pathType: ImplementationSpecific
