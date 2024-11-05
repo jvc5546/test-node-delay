@@ -9,7 +9,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     resources:
       requests:
-        cpu: "2"
+        cpu: "1.9"
         memory: "8Gi"
 
   frontend:
