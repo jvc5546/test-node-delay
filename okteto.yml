@@ -9,5 +9,5 @@ dev:
         cpu: "3.5Gi"
         memory: "12Gi"
       limits:
-        cpu: "3.92GiB"
+        cpu: "3.92Gi"
         memory: "13.5Gi"
