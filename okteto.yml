@@ -1,2 +1,2 @@
 deploy:
-  - helm upgrade --install movies charts
+  compose: docker-compose.yml

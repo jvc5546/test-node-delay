@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu, memory request for container
+      nginx; cpu, memory limit for container nginx'
+  labels:
+    dev.okteto.com: "true"
+    dev.okteto.com/affinity: okteto-admin
+    dev.okteto.com/deployed-by: test-node-delay
+    dev.okteto.com/pod-owner-kind: ReplicaSet
+    dev.okteto.com/user: okteto-admin
+    pod-template-hash: 5955cf6c4c
+    stack.okteto.com/name: test-node-delay
+    stack.okteto.com/service: nginx
+  name: nginx-5955cf6c4c-rzcn8
+  namespace: okteto-admin
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - preference:
+          matchExpressions:
+          - key: dev.okteto.com/overloaded
+            operator: DoesNotExist
+        weight: 50
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dev.okteto.com/deployed-by
+            operator: NotIn
+            values:
+            - test-node-delay
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: dev.okteto.com/affinity
+              operator: In
+              values:
+              - okteto-admin
+          topologyKey: kubernetes.io/hostname
+        weight: 10
+  containers:
+  - env:
+    - name: OKTETO_DOMAIN
+      value: jona.okteto.me
+    - name: OKTETO_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    image: registry.jona.okteto.me/okteto-admin/test-node-delay-nginx@sha256:7db9c1a157055b8508402a1f4a021db1f2528bfc66f4b44ae497b5e8a023eb7c
+    imagePullPolicy: Always
+    name: nginx
+    ports:
+    - containerPort: 80
+    resources:
+      limits:
+        cpu: "2"
+        memory: 8Gi
+      requests:
+        cpu: 10m
+        memory: 50Mi
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tvlcx
+      readOnly: true
+  imagePullSecrets:
+  - name: okteto-regcred
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 0
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-tvlcx
+    projected:
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              fieldPath: metadata.namespace
+            path: namespace
