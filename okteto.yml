@@ -1,2 +1,13 @@
 deploy:
   compose: docker-compose.yml
+
+dev:
+  frontend:
+    command: npm start
+    resources:
+      requests:
+        cpu: "3.5GB"
+        memory: "12GB"
+      limits:
+        cpu: "3.92GB"
+        memory: "13.5GB"
