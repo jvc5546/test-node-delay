@@ -6,5 +6,5 @@ dev:
     command: npm start
     resources:
       requests:
-        cpu: "2Gi"
+        cpu: "2"
         memory: "5Gi"
