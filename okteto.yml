@@ -6,8 +6,5 @@ dev:
     command: npm start
     resources:
       requests:
-        cpu: "3.5Gi"
-        memory: "12Gi"
-      limits:
-        cpu: "3.92Gi"
-        memory: "13.5Gi"
+        cpu: "2Gi"
+        memory: "5Gi"
