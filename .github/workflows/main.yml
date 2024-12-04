@@ -7,11 +7,19 @@ jobs:
 
   devflow:
     runs-on: ubuntu-latest
-    container: okteto/okteto:master
     steps:
     
     - name: checkout
       uses: actions/checkout@master
+    
+    - name: "Create random directory"
+      run: |
+        echo "Starting the creation of a random file"
+        cd ~
+        mkdir .test_kube
+        touch .test_kube/somefile.txt
+        echo "some text" > .test_kube/somefile.txt
+        echo "Finished creating random file"
     
     - uses: okteto/context@latest
       with:
