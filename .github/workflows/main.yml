@@ -26,11 +26,10 @@ jobs:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
     
-    - name: "Move kube config from github home to runner home"
+    - name: "See if /github/home is accessible to the runner"
       run: |
-        cd $HOME
-        mkdir .kube
-        cp /github/home/.kube/config $HOME/.kube
+        cd /github/home/
+        ls -al
 
     - name: "Check kubeconfig file"
       run: |
