@@ -18,4 +18,4 @@ jobs:
         token: ${{ secrets.OKTETO_TOKEN }}
     
     - name: "Check kubeconfig file"
-      run: echo "Hello Github Action world!"
+      run: cd ~ && ls -al
