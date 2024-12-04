@@ -44,5 +44,5 @@ jobs:
 
     - name: "Run a kubectl command"
       run: |
-        cat $HOME/.kube/config
+        kubectl get pod -n okteto
       
