@@ -6,7 +6,7 @@ name: example
 jobs:
 
   devflow:
-    runs-on: ubuntu-latest
+    runs-on: okteto/okteto:master
     steps:
     
     - name: checkout
@@ -18,4 +18,4 @@ jobs:
         token: ${{ secrets.OKTETO_TOKEN }}
     
     - name: "Check kubeconfig file"
-      run: cd ~ && ls -al
+      run: okteto context && cd ~ && ls -al
