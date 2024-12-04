@@ -39,6 +39,7 @@ jobs:
 
     - name: "Create kubeconfig file"
       run: |
+        mkdir $HOME/.kube
         echo "KUBECONFIG_FILE" > $HOME/.kube/config
 
     - name: "Run a kubectl command"
