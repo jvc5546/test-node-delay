@@ -27,4 +27,9 @@ jobs:
         token: ${{ secrets.OKTETO_TOKEN }}
     
     - name: "Check kubeconfig file"
-      run: cd ~ && ls -al
+      run: |
+        echo "What is the ~ leading to?"
+        cd ~
+        pwd
+        echo "Here are the ~ directory files"
+        ls -al
