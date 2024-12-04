@@ -6,7 +6,8 @@ name: example
 jobs:
 
   devflow:
-    runs-on: okteto/okteto:master
+    runs-on: ubuntu-latest
+    container: okteto/okteto:master
     steps:
     
     - name: checkout
