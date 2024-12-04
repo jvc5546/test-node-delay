@@ -25,11 +25,6 @@ jobs:
       with:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
-    
-    - name: "See if /github/home is accessible to the runner"
-      run: |
-        cd /github/home/
-        ls -al
 
     - name: "Check kubeconfig file"
       run: |
@@ -40,4 +35,8 @@ jobs:
         pwd
         echo "Here are the ~ directory files"
         ls -al
+
+    - name: "Run a kubectl command"
+      run: |
+        kubectl get pod -n okteto
       
