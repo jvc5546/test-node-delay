@@ -1,0 +1,21 @@
+# File: .github/workflows/workflow.yml
+on: [push]
+
+name: example
+
+jobs:
+
+  devflow:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: checkout
+      uses: actions/checkout@master
+    
+    - uses: okteto/context@latest
+      with:
+        url: https://okteto.example.com
+        token: ${{ secrets.OKTETO_TOKEN }}
+    
+    - name: "Check kubeconfig file"
+      run: echo "Hello Github Action world!"
