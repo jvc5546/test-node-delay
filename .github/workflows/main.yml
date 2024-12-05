@@ -24,7 +24,7 @@ jobs:
     - name: Create config directory
       run: |
         cd $HOME
-        mkdir test_config
+        touch test_config
     
     - name: Create random directory
       run: |
@@ -45,6 +45,7 @@ jobs:
         cd $HOME
         echo "Here are the directories and files in ${HOME}"
         ls -al
+        cat test_config
 
     # - name: Create kubeconfig file
     #   run: |
