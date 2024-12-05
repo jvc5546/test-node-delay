@@ -21,6 +21,10 @@ jobs:
       run: |
         echo "Running echo $KUBECONFIG"
         echo $KUBECONFIG
+    - name: Create config directory
+      run: |
+        cd $HOME
+        mkdir test_config
     
     - name: Create random directory
       run: |
