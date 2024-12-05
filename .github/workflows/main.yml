@@ -10,49 +10,68 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Set New Environment Variable
-      run: |
-        echo "KUBECONFIG=${HOME}/test_config" >> $GITHUB_ENV
+    # - name: Set New Environment Variable
+    #   run: |
+    #     echo "KUBECONFIG=${HOME}/test_config" >> $GITHUB_ENV
     
-    - name: checkout
-      uses: actions/checkout@master
+    # - name: checkout
+    #   uses: actions/checkout@master
     
-    - name: Echo Kubeconfig variable
-      run: |
-        echo "Running echo $KUBECONFIG"
-        echo $KUBECONFIG
-    - name: Create config directory
-      run: |
-        cd $HOME
-        touch test_config
+    # - name: Echo Kubeconfig variable
+    #   run: |
+    #     echo "Running echo $KUBECONFIG"
+    #     echo $KUBECONFIG
+        
+    # - name: Create config directory
+    #   run: |
+    #     cd $HOME
+    #     touch test_config
     
-    - name: Create random directory
-      run: |
-        echo "Starting the creation of a random file"
-        cd ~
-        mkdir .test_kube
-        touch .test_kube/somefile.txt
-        echo "some text" > .test_kube/somefile.txt
-        echo "Finished creating random file"
+    # - name: Create random directory
+    #   run: |
+    #     echo "Starting the creation of a random file"
+    #     cd ~
+    #     mkdir .test_kube
+    #     touch .test_kube/somefile.txt
+    #     echo "some text" > .test_kube/somefile.txt
+    #     echo "Finished creating random file"
     
-    - uses: okteto/context@latest
-      with:
-        url: https://okteto.jona.okteto.me/
-        token: ${{ secrets.OKTETO_TOKEN }}
+    # - uses: okteto/context@latest
+    #   with:
+    #     url: https://okteto.jona.okteto.me/
+    #     token: ${{ secrets.OKTETO_TOKEN }}
 
-    - name: Check kubeconfig file
-      run: |
-        cd $HOME
-        echo "Here are the directories and files in ${HOME}"
-        ls -al
-        cat test_config
+    # - name: Check kubeconfig file
+    #   run: |
+    #     cd $HOME
+    #     echo "Here are the directories and files in ${HOME}"
+    #     ls -al
+    #     cat test_config
 
     # - name: Create kubeconfig file
     #   run: |
     #     mkdir $HOME/.kube
     #     echo "$KUBECONFIG_FILE" > $HOME/.kube/config
 
+    # - name: Run a kubectl command
+    #   run: |
+    #     kubectl get pod -n okteto
+
+    - name: Install Okteto CLI
+      run: |
+        curl https://get.okteto.com -sSfL | sh
+    
+    - name: Login to Okteto
+      run: |
+        okteto context use https://okteto.jona.okteto.me/ --token ${{ secrets.OKTETO_TOKEN }}
+    
+    - name: Generate kubeconfig
+      run: |
+        export KUBECONFG=$HOME/.kube/config
+        okteto kubeconfig
+        echo "KUBECONFIG=$HOME/.kube/config" >> $GITHUB_ENV
+    
     - name: Run a kubectl command
       run: |
-        kubectl get pod -n okteto
+        kubectl get pods -n okteto
       
