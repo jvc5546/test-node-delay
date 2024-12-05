@@ -38,12 +38,8 @@ jobs:
 
     - name: Check kubeconfig file
       run: |
-        echo "What is the ourput of $HOME?"
-        echo $HOME
-        echo "What is the ~ leading to?"
-        cd ~
-        pwd
-        echo "Here are the ~ directory files"
+        cd $HOME
+        echo "Here are the directories and files in ${HOME}"
         ls -al
 
     # - name: Create kubeconfig file
