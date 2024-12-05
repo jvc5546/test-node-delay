@@ -4,6 +4,7 @@ on: [push]
 name: example
 env:
   KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_FILE }}
+  KUBECONFIG: $HOME/.kube/config
 jobs:
 
   devflow:
@@ -12,6 +13,11 @@ jobs:
     
     - name: checkout
       uses: actions/checkout@master
+    
+    - name: "Echo Kubeconfig variable"
+      run: |
+        echo "Running echo $KUBECONFIG"
+        echo $KUBECONFIG
     
     - name: "Create random directory"
       run: |
