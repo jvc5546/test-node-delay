@@ -67,11 +67,11 @@ jobs:
     
     - name: Generate kubeconfig
       run: |
-        export KUBECONFG=$HOME/.kube/config
+        export KUBECONFIG=$HOME/.kube/config
         okteto kubeconfig
         echo "KUBECONFIG=$HOME/.kube/config" >> $GITHUB_ENV
     
     - name: Run a kubectl command
       run: |
-        kubectl get pods -n okteto
+        kubectl get pods -n okteto-admin
       
