@@ -12,7 +12,7 @@ jobs:
     
     - name: Set New Environment Variable
       run: |
-        echo "KUBECONFIG=${HOME}/.kube/config" >> $GITHUB_ENV
+        echo "KUBECONFIG=${HOME}/test_config" >> $GITHUB_ENV
     
     - name: checkout
       uses: actions/checkout@master
