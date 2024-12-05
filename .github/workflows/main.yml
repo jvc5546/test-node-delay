@@ -4,22 +4,25 @@ on: [push]
 name: example
 env:
   KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_FILE }}
-  KUBECONFIG: $HOME/.kube/config
 jobs:
 
   devflow:
     runs-on: ubuntu-latest
     steps:
     
+    - name: Set New Environment Variable
+      run: |
+        echo "KUBECONFIG=${HOME}/.kube/config" >> $GITHUB_ENV
+    
     - name: checkout
       uses: actions/checkout@master
     
-    - name: "Echo Kubeconfig variable"
+    - name: Echo Kubeconfig variable
       run: |
         echo "Running echo $KUBECONFIG"
         echo $KUBECONFIG
     
-    - name: "Create random directory"
+    - name: Create random directory
       run: |
         echo "Starting the creation of a random file"
         cd ~
@@ -33,22 +36,22 @@ jobs:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
 
-    - name: "Check kubeconfig file"
-      run: |
-        echo "What is the ourput of $HOME?"
-        echo $HOME
-        echo "What is the ~ leading to?"
-        cd ~
-        pwd
-        echo "Here are the ~ directory files"
-        ls -al
+    # - name: Check kubeconfig file
+    #   run: |
+    #     echo "What is the ourput of $HOME?"
+    #     echo $HOME
+    #     echo "What is the ~ leading to?"
+    #     cd ~
+    #     pwd
+    #     echo "Here are the ~ directory files"
+    #     ls -al
 
-    - name: "Create kubeconfig file"
-      run: |
-        mkdir $HOME/.kube
-        echo "$KUBECONFIG_FILE" > $HOME/.kube/config
+    # - name: Create kubeconfig file
+    #   run: |
+    #     mkdir $HOME/.kube
+    #     echo "$KUBECONFIG_FILE" > $HOME/.kube/config
 
-    - name: "Run a kubectl command"
+    - name: Run a kubectl command
       run: |
         kubectl get pod -n okteto
       
