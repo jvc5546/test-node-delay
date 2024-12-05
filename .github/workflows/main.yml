@@ -36,15 +36,15 @@ jobs:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
 
-    # - name: Check kubeconfig file
-    #   run: |
-    #     echo "What is the ourput of $HOME?"
-    #     echo $HOME
-    #     echo "What is the ~ leading to?"
-    #     cd ~
-    #     pwd
-    #     echo "Here are the ~ directory files"
-    #     ls -al
+    - name: Check kubeconfig file
+      run: |
+        echo "What is the ourput of $HOME?"
+        echo $HOME
+        echo "What is the ~ leading to?"
+        cd ~
+        pwd
+        echo "Here are the ~ directory files"
+        ls -al
 
     # - name: Create kubeconfig file
     #   run: |
