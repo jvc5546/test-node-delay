@@ -4,14 +4,16 @@ on: [push]
 name: example
 env:
   KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_FILE }}
-  KUBECONFIG: $RUNNER_TEMP/.kube/config
 jobs:
-
   devflow:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@master
+
+    - name: Set New Environment Variable
+      run: |
+        echo "KUBECONFIG=${RUNNER_TEMP}/.kube/config" >> $GITHUB_ENV
     
     - name: Echo Kubeconfig variable
       run: |
