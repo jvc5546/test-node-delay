@@ -4,7 +4,7 @@ on: [push]
 name: example
 env:
   KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_FILE }}
-  KUBECONFIG: ${RUNNER_TEMP}/.kube/config
+  KUBECONFIG: $RUNNER_TEMP/.kube/config
 jobs:
 
   devflow:
@@ -31,10 +31,7 @@ jobs:
       with:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
-      env: 
-        KUBECONFIG: ${RUNNER_TEMP}/.kube/config
         
-
     - name: Check kubeconfig file
       run: |
         cd $RUNNER_TEMP/.kube
