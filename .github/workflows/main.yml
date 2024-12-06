@@ -32,7 +32,7 @@ jobs:
         url: https://okteto.jona.okteto.me/
         token: ${{ secrets.OKTETO_TOKEN }}
       env: 
-        KUBECONFIG: $RUNNER_TEMP/.kube/config
+        KUBECONFIG: ${RUNNER_TEMP}/.kube/config
         
 
     - name: Check kubeconfig file
