@@ -10,6 +10,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@master
+    
+    - name: Echo value of RUNNER_TEMP
+      run: |
+        echo "The value of RUNNER_TEMP is ${RUNNER_TEMP}"
 
     - name: Set New Environment Variable
       run: |
